@@ -1,0 +1,141 @@
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api";
+
+export type UploadedDocument = {
+  document_id: string;
+  original_filename: string;
+  status: string;
+  parsing?: unknown;
+  chunking_results?: unknown[];
+  embedding_results?: unknown[];
+  indexing_results?: unknown[];
+};
+
+export type UploadResponse = {
+  status: string;
+  uploaded_count: number;
+  failed_count: number;
+  documents: UploadedDocument[];
+  errors: unknown[];
+};
+
+export type ChatSource = {
+  score: number;
+  chunk_id: string;
+  document_id: string;
+  document_name: string;
+  strategy: string;
+  chunk_type: string;
+  section_title?: string | null;
+  page_number?: number | null;
+  chunk_index: number;
+  text: string;
+};
+
+export type ChatResponse = {
+  question: string;
+  answer: string;
+  strategy: string;
+  provider: string;
+  document_id?: string | null;
+  sources: ChatSource[];
+};
+
+export type EvaluationQuestionResult = {
+  question_id: string;
+  question: string;
+  expected_answer: string;
+  expected_keywords: string[];
+  retrieved_text_preview: string;
+  matched_keywords: string[];
+  missing_keywords: string[];
+  keyword_recall: number;
+  top_score?: number | null;
+  passed: boolean;
+};
+
+export type EvaluationStrategyResult = {
+  strategy: string;
+  questions_evaluated: number;
+  average_keyword_recall: number;
+  pass_rate: number;
+  results: EvaluationQuestionResult[];
+};
+
+export type EvaluationResponse = {
+  document_id?: string | null;
+  limit: number;
+  strategies_evaluated: string[];
+  strategy_results: EvaluationStrategyResult[];
+};
+
+export async function uploadDocuments(files: FileList): Promise<UploadResponse> {
+  const formData = new FormData();
+
+  Array.from(files).forEach((file) => {
+    formData.append("files", file);
+  });
+
+  const response = await fetch(`${API_BASE_URL}/documents/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+}
+
+export async function chatWithDocument(params: {
+  question: string;
+  documentId?: string;
+  strategy: string;
+  provider: string;
+  limit: number;
+}): Promise<ChatResponse> {
+  const response = await fetch(`${API_BASE_URL}/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      question: params.question,
+      document_id: params.documentId || null,
+      strategy: params.strategy,
+      provider: params.provider,
+      limit: params.limit,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+}
+
+export async function runEvaluation(params: {
+  documentId?: string;
+  strategies: string[];
+  limit: number;
+}): Promise<EvaluationResponse> {
+  const response = await fetch(`${API_BASE_URL}/evaluation/run`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      document_id: params.documentId || null,
+      strategies: params.strategies,
+      limit: params.limit,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+}

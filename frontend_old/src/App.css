@@ -1,0 +1,237 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #172033;
+  background: #f5f7fb;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+select,
+textarea,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  background: #172033;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, #172033, #32415f);
+  color: white;
+  border-radius: 28px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 18px 40px rgba(23, 32, 51, 0.18);
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 4rem);
+  max-width: 960px;
+}
+
+.subtitle {
+  max-width: 900px;
+  opacity: 0.82;
+  line-height: 1.6;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.panel,
+.main-panel,
+.answer-card,
+.evaluation {
+  background: white;
+  border-radius: 24px;
+  padding: 1.25rem;
+  box-shadow: 0 12px 30px rgba(23, 32, 51, 0.08);
+}
+
+.panel {
+  position: sticky;
+  top: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.panel h2 {
+  margin: 1rem 0 0.2rem;
+  font-size: 1rem;
+}
+
+.panel input,
+.panel select,
+.chat-box textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d8deea;
+  border-radius: 14px;
+  padding: 0.8rem;
+  background: #fbfcff;
+}
+
+.best-box {
+  border-radius: 18px;
+  padding: 1rem;
+  background: #eef4ff;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.best-box p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #4c5a73;
+}
+
+.best-box strong {
+  font-size: 1.25rem;
+}
+
+.best-box span {
+  font-size: 0.9rem;
+}
+
+.main-panel {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.chat-box {
+  display: grid;
+  gap: 1rem;
+}
+
+.chat-box textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.status {
+  background: #fff7df;
+  border: 1px solid #f4d27b;
+  padding: 0.85rem;
+  border-radius: 14px;
+}
+
+.error {
+  white-space: pre-wrap;
+  color: #8a1f1f;
+  background: #fff0f0;
+  border: 1px solid #ffd0d0;
+  padding: 1rem;
+  border-radius: 14px;
+  overflow: auto;
+}
+
+.answer-card p {
+  line-height: 1.65;
+}
+
+.sources {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.source-card,
+.question-results details {
+  border: 1px solid #e3e8f2;
+  border-radius: 16px;
+  padding: 0.9rem;
+  background: #fbfcff;
+}
+
+.source-card summary,
+.question-results summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.source-card p {
+  white-space: pre-wrap;
+  color: #2f3a4f;
+}
+
+.evaluation {
+  overflow-x: auto;
+}
+
+.evaluation table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.evaluation th,
+.evaluation td {
+  text-align: left;
+  border-bottom: 1px solid #e6ebf4;
+  padding: 0.8rem;
+}
+
+.evaluation th {
+  background: #f7f9fd;
+  font-size: 0.9rem;
+}
+
+.question-results {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.eval-card {
+  margin-top: 0.8rem;
+  border-left: 4px solid #172033;
+  padding: 0.8rem;
+  background: white;
+  border-radius: 12px;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    position: static;
+  }
+
+  .app-shell {
+    padding: 1rem;
+  }
+}
