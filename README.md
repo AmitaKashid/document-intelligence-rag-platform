@@ -67,7 +67,7 @@ flowchart LR
     EVAL --> SCORES[Strategy Metrics]
     SCORES --> FE
 ```
-
+```
 
 ## Screenshots
 
@@ -83,7 +83,7 @@ flowchart LR
 
 ![Retrieval evaluation dashboard](docs/screenshots/evaluation.png)
 
-
+```
 
 ---
 
