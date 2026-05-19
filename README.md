@@ -170,9 +170,7 @@ RERANKER_CANDIDATE_LIMIT=12
 RERANKER_FINAL_TOP_K=3
 ```
 
-Do not commit real API keys. Keep real secrets only in `backend/.env`.
 
----
 
 ## API Overview
 
@@ -371,35 +369,6 @@ python -m evaluation.run_eval
 
 ---
 
-## Security Notes
-
-- Do not commit `.env` files.
-- Do not commit API keys.
-- Keep `.env.example` files limited to placeholders.
-- Rotate keys immediately if they are accidentally exposed.
-- Keep uploaded PDFs and generated storage outputs out of Git.
-- Store production secrets in the deployment platform, not in source code.
-
-Recommended ignored paths:
-
-```gitignore
-.env
-.env.local
-backend/.env
-frontend/.env
-.venv/
-backend/.venv/
-node_modules/
-frontend/node_modules/
-dist/
-frontend/dist/
-backend/storage/
-__pycache__/
-*.pyc
-```
-
----
-
 ## Limitations
 
 - Evaluation uses a fixed benchmark set and custom scoring.
@@ -436,8 +405,4 @@ __pycache__/
 8. Explain why `section_aware + top_k=3` is the default configuration.
 9. Open FastAPI docs and Qdrant dashboard to show the backend infrastructure.
 
----
 
-## License
-
-This project is intended for educational and portfolio use. Add a license file before public or commercial distribution.
