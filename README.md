@@ -67,24 +67,7 @@ flowchart LR
     EVAL --> SCORES[Strategy Metrics]
     SCORES --> FE
 ```
----
 
-## Screenshots
-
-### Document Upload and Retrieval Policy
-
-![Document upload and retrieval policy](docs/screenshots/dashboard.png)
-
-### Chat with Source-Grounded Answer
-
-![Chat with source-grounded answer](docs/screenshots/chat_sources.png)
-
-### Retrieval Evaluation Dashboard
-
-![Retrieval evaluation dashboard](docs/screenshots/evaluation.png)
-
-
----
 ---
 
 ## Core Workflow
