@@ -713,3 +713,27 @@ Use this sequence when presenting the project:
 ## License
 
 This project is intended for educational and portfolio use. Add a license file before using it in a public or commercial setting.
+
+
+
+
+
+
+
+
+
+
+
+## Evaluation Setup
+
+The platform evaluates different retrieval configurations by running the same benchmark questions across multiple chunking strategies and top-k values. The goal is to identify which strategy gives the best balance between retrieval quality, groundedness, citation accuracy, and latency.
+
+| Component | Configuration |
+|---|---|
+| Evaluation mode | Full RAG evaluation |
+| Evaluated strategies | `section_aware`, `recursive`, `parent_child`, `table_preserving` |
+| Top-k values | `3`, `5` |
+| Number of benchmark questions | 10 |
+| Total evaluation runs | 80 full `/api/chat` calls |
+| Metrics tracked | Overall score, retrieval score, groundedness, citation accuracy, latency |
+| Best current configuration | `section_aware`, `top_k=3` |
