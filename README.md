@@ -737,3 +737,49 @@ The platform evaluates different retrieval configurations by running the same be
 | Total evaluation runs | 80 full `/api/chat` calls |
 | Metrics tracked | Overall score, retrieval score, groundedness, citation accuracy, latency |
 | Best current configuration | `section_aware`, `top_k=3` |
+
+
+
+## RAG Evaluation Results
+
+| Rank | Chunking Strategy | Top-k | Overall Score | Retrieval Score | Groundedness | Citation Accuracy | Avg. Latency (ms) | Interpretation |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| 1 | `section_aware` | 3 | 0.4672 | 0.40 | 0.7000 | 0.40 | 3203.849 | Best current balance of quality and latency |
+| 2 | `parent_child` | 5 | 0.4447 | 0.40 | 0.6667 | 0.40 | 7324.487 | Similar retrieval/citation, but much slower |
+| 3 | `parent_child` | 3 | 0.4318 | 0.30 | 0.7679 | 0.30 | 5488.946 | Highest groundedness, but lower retrieval/citation |
+| 4 | `section_aware` | 5 | 0.4181 | 0.40 | 0.5500 | 0.40 | 5394.476 | More context did not improve quality |
+| 5 | `recursive` | 3 | 0.3942 | 0.40 | 0.5602 | 0.40 | 9763.390 | Acceptable retrieval, but slow |
+
+
+## Top-k Comparison
+
+| Strategy | Top-k | Overall Score | Retrieval Score | Groundedness | Citation Accuracy | Avg. Latency (ms) | Decision |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `section_aware` | 3 | 0.4672 | 0.40 | 0.7000 | 0.40 | 3203.849 | Recommended |
+| `section_aware` | 5 | 0.4181 | 0.40 | 0.5500 | 0.40 | 5394.476 | Slower and lower quality |
+| `parent_child` | 3 | 0.4318 | 0.30 | 0.7679 | 0.30 | 5488.946 | Good groundedness, weaker retrieval |
+| `parent_child` | 5 | 0.4447 | 0.40 | 0.6667 | 0.40 | 7324.487 | Better retrieval, but slow |
+| `recursive` | 3 | 0.3942 | 0.40 | 0.5602 | 0.40 | 9763.390 | Not selected due to latency |
+
+
+## Evaluation Metrics
+
+| Metric | What It Measures | Why It Matters |
+|---|---|---|
+| Overall Score | Weighted combined score across retrieval, answer quality, groundedness, citation accuracy, and latency | Used to select the best retrieval configuration |
+| Retrieval Score | Whether the expected document/page/section was retrieved | Identifies whether the retriever found the right evidence |
+| Groundedness | Whether the generated answer is supported by retrieved context | Helps detect hallucination or unsupported claims |
+| Citation Accuracy | Whether the returned answer cites the expected source metadata | Important for document-grounded answers with page/section references |
+| Latency | Average time for the full `/api/chat` response | Ensures the selected strategy is usable in an interactive web app |
+
+
+## Selected Default Retrieval Policy
+
+| Decision Area | Selected Value | Reason |
+|---|---|---|
+| Default strategy | `section_aware` | Best overall score in current evaluation |
+| Default top-k | `3` | Better quality-latency balance than `top_k=5` |
+| Fallback strategy | `recursive` | Useful when documents have weak heading structure |
+| Alternative for long structured documents | `parent_child` | Preserves broader parent context, but increases latency |
+| Alternative for table-heavy documents | `table_preserving` | Keeps tables intact and avoids splitting tabular content |
+| Full evaluation mode | On-demand | Prevents upload flow from becoming slow |
