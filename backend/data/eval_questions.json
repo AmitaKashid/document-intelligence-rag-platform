@@ -1,0 +1,64 @@
+[
+  
+  
+  {
+    "id": "tts_q1",
+    "question": "Why is no single metric sufficient for evaluating TTS models?",
+    "expected_answer": "No single metric is sufficient because TTS quality has multiple dimensions. A model may sound natural but still be less intelligible, less expressive, less stable in speaker identity, or less suitable for interactive use.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": 1,
+        "section": "1. Overview"
+      }
+    ]
+  },
+  {
+    "id": "tts_q2",
+    "question": "What does Mean Opinion Score measure in TTS evaluation?",
+    "expected_answer": "Mean Opinion Score measures listeners' perceived speech quality, usually on a 1 to 5 scale. It can be used for overall quality, naturalness, pleasantness, listening effort, pronunciation quality, articulation clarity, speaking rate, and comprehension difficulty.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": 1,
+        "section": "2.1 Mean Opinion Score"
+      }
+    ]
+  },
+  {
+    "id": "tts_q3",
+    "question": "Why are modified MOS or multi-item quality scales useful?",
+    "expected_answer": "Modified MOS and multi-item quality scales are useful because they evaluate speech quality through several concrete dimensions instead of one broad naturalness score. This makes weaknesses easier to diagnose and makes the evaluation more academically defensible.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": 3,
+        "section": "2.2 Modified MOS / Multi-item Quality Scales"
+      }
+    ]
+  },
+  {
+    "id": "tts_q4",
+    "question": "How does ASR-based WER evaluate intelligibility?",
+    "expected_answer": "ASR-based WER evaluates intelligibility by generating TTS audio, transcribing it with an ASR system, comparing the transcript with the original input text, and computing Word Error Rate.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": 6,
+        "section": "3.2 ASR-based WER as an Objective Proxy for Intelligibility"
+      }
+    ]
+  },
+  {
+    "id": "tts_q5",
+    "question": "Which TTS evaluation methods are recommended as core methods for the thesis?",
+    "expected_answer": "The recommended core methods are a multi-item subjective listening test, pairwise preference testing, objective WER, a challenging prompt benchmark, and, if feasible, a small contextual user study inside the tutor system.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": 14,
+        "section": "11.1 Core methods I would recommend"
+      }
+    ]
+  }
+]

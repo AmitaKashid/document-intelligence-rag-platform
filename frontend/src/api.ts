@@ -1,5 +1,19 @@
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api";
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+
+export type DocumentProfile = {
+  document_id: string;
+  document_name: string;
+  page_count: number;
+  heading_count: number;
+  table_count: number;
+  avg_page_chars: number;
+  chunk_counts?: Record<string, number>;
+  detected_structure: string;
+  recommended_strategy: string;
+  recommended_top_k: number;
+  reason: string;
+};
 
 export type UploadedDocument = {
   document_id: string;
@@ -9,8 +23,12 @@ export type UploadedDocument = {
   chunking_results?: unknown[];
   embedding_results?: unknown[];
   indexing_results?: unknown[];
-};
 
+  document_profile?: DocumentProfile | null;
+  profile_path?: string | null;
+  recommended_strategy?: string | null;
+  recommended_top_k?: number | null;
+};
 export type UploadResponse = {
   status: string;
   uploaded_count: number;
@@ -30,6 +48,10 @@ export type ChatSource = {
   page_number?: number | null;
   chunk_index: number;
   text: string;
+
+  similarity_score?: number | null;
+  rerank_score?: number | null;
+  original_rank?: number | null;
 };
 
 export type ChatResponse = {
@@ -39,6 +61,11 @@ export type ChatResponse = {
   provider: string;
   document_id?: string | null;
   sources: ChatSource[];
+  used_strategy?: string | null;
+  used_top_k?: number | null;
+
+  used_reranking?: boolean | null;
+  rerank_candidate_limit?: number | null;
 };
 
 export type EvaluationQuestionResult = {
@@ -101,6 +128,8 @@ export async function chatWithDocument(params: {
   strategy: string;
   provider: string;
   limit: number;
+  rerank?: boolean;
+  rerankCandidateLimit?: number;
 }): Promise<ChatResponse> {
   const response = await fetch(`${API_BASE_URL}/chat`, {
     method: "POST",
@@ -113,6 +142,8 @@ export async function chatWithDocument(params: {
       strategy: params.strategy,
       provider: params.provider,
       limit: params.limit,
+      rerank: params.rerank,
+      rerank_candidate_limit: params.rerankCandidateLimit,
     }),
   });
 

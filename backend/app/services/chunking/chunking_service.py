@@ -3,7 +3,7 @@ import re
 import uuid
 from pathlib import Path
 from statistics import mean
-
+import fitz
 from app.core.config import settings
 from app.schemas.document import DocumentChunk
 
@@ -24,29 +24,36 @@ class ChunkingService:
         document_id: str,
         document_name: str,
         markdown_path: str,
+        pdf_path: str | None = None,
     ) -> list[dict]:
         markdown = Path(markdown_path).read_text(encoding="utf-8")
+
+        page_texts = self._extract_pdf_pages(pdf_path) if pdf_path else []
 
         strategy_to_chunks = {
             "recursive": self.create_recursive_chunks(
                 document_id=document_id,
                 document_name=document_name,
                 markdown=markdown,
+                page_texts=page_texts,
             ),
             "section_aware": self.create_section_aware_chunks(
                 document_id=document_id,
                 document_name=document_name,
                 markdown=markdown,
+                page_texts=page_texts,
             ),
             "table_preserving": self.create_table_preserving_chunks(
                 document_id=document_id,
                 document_name=document_name,
                 markdown=markdown,
+                page_texts=page_texts,
             ),
             "parent_child": self.create_parent_child_chunks(
                 document_id=document_id,
                 document_name=document_name,
                 markdown=markdown,
+                page_texts=page_texts,
             ),
         }
 
@@ -71,10 +78,11 @@ class ChunkingService:
         return results
 
     def create_recursive_chunks(
-        self,
-        document_id: str,
-        document_name: str,
-        markdown: str,
+    self,
+    document_id: str,
+    document_name: str,
+    markdown: str,
+    page_texts: list[dict] | None = None,
     ) -> list[DocumentChunk]:
         text = self._normalize_text(markdown)
 
@@ -98,6 +106,7 @@ class ChunkingService:
                 chunk_type="text",
                 text=chunk_text,
                 chunk_index=index,
+                page_number=self._infer_page_number(chunk_text, page_texts or []),
             )
             for index, chunk_text in enumerate(raw_chunks)
         ]
@@ -107,6 +116,7 @@ class ChunkingService:
         document_id: str,
         document_name: str,
         markdown: str,
+        page_texts: list[dict] | None = None,
     ) -> list[DocumentChunk]:
         sections = self._split_markdown_sections(markdown)
         chunks: list[DocumentChunk] = []
@@ -127,6 +137,7 @@ class ChunkingService:
                         text=section_text,
                         chunk_index=len(chunks),
                         section_title=section_title,
+                        page_number=self._infer_page_number(section_text, page_texts or []),
                     )
                 )
             else:
@@ -151,17 +162,18 @@ class ChunkingService:
                             text=chunk_text,
                             chunk_index=len(chunks),
                             section_title=section_title,
+                            page_number=self._infer_page_number(chunk_text, page_texts or []),
                         )
                     )
 
         return chunks
-
     def create_table_preserving_chunks(
         self,
         document_id: str,
         document_name: str,
         markdown: str,
-    ) -> list[DocumentChunk]:
+        page_texts: list[dict] | None = None,
+        ) -> list[DocumentChunk]:
         blocks = self._split_markdown_preserving_tables(markdown)
         chunks: list[DocumentChunk] = []
 
@@ -189,6 +201,7 @@ class ChunkingService:
                                     chunk_type="text",
                                     text=text_chunk,
                                     chunk_index=len(chunks),
+                                    page_number=self._infer_page_number(text_chunk, page_texts or []),
                                 )
                             )
 
@@ -202,6 +215,7 @@ class ChunkingService:
                         chunk_type="table",
                         text=block_text,
                         chunk_index=len(chunks),
+                        page_number=self._infer_page_number(block_text, page_texts or []),
                     )
                 )
             else:
@@ -222,16 +236,17 @@ class ChunkingService:
                             chunk_type="text",
                             text=text_chunk,
                             chunk_index=len(chunks),
+                            page_number=self._infer_page_number(text_chunk, page_texts or []),
                         )
                     )
 
         return chunks
-
     def create_parent_child_chunks(
         self,
         document_id: str,
         document_name: str,
         markdown: str,
+        page_texts: list[dict] | None = None,
     ) -> list[DocumentChunk]:
         sections = self._split_markdown_sections(markdown)
         chunks: list[DocumentChunk] = []
@@ -243,7 +258,7 @@ class ChunkingService:
                 continue
 
             parent_id = str(uuid.uuid4())
-
+            parent_page_number = self._infer_page_number(section_text, page_texts or [])
             parent_chunk = DocumentChunk(
                 chunk_id=parent_id,
                 document_id=document_id,
@@ -254,6 +269,7 @@ class ChunkingService:
                 chunk_index=len(chunks),
                 parent_id=None,
                 section_title=section_title,
+                page_number=parent_page_number,
                 metadata={
                     "role": "parent_context",
                     "child_chunk_size": 450,
@@ -285,6 +301,7 @@ class ChunkingService:
                         chunk_index=len(chunks),
                         parent_id=parent_id,
                         section_title=section_title,
+                        page_number=self._infer_page_number(child_text, page_texts or []),
                         metadata={
                             "role": "retrieval_child",
                         },
@@ -530,6 +547,172 @@ class ChunkingService:
         text = re.sub(r"\n{3,}", "\n\n", text)
         text = re.sub(r"[ \t]+", " ", text)
         return text.strip()
+
+    def _extract_pdf_pages(self, pdf_path: str | None) -> list[dict]:
+        if not pdf_path:
+            return []
+
+        path = Path(pdf_path)
+
+        if not path.exists():
+            return []
+
+        pages: list[dict] = []
+
+        with fitz.open(str(path)) as doc:
+            for page_index, page in enumerate(doc):
+                text = page.get_text("text")
+                text = self._normalize_text(text)
+
+                if not text:
+                    continue
+
+                pages.append(
+                    {
+                        "page_number": page_index + 1,
+                        "text": text,
+                        "normalized_text": self._normalize_for_page_match(text),
+                        "tokens": set(self._tokenize_for_page_match(text)),
+                    }
+                )
+
+        return pages
+
+
+    def _normalize_for_page_match(self, text: str) -> str:
+        text = text.lower()
+        text = re.sub(r"[^a-z0-9äöüß]+", " ", text)
+        text = re.sub(r"\s+", " ", text)
+        return text.strip()
+
+
+    def _tokenize_for_page_match(self, text: str) -> list[str]:
+        text = self._normalize_for_page_match(text)
+
+        stopwords = {
+            "this", "that", "with", "from", "into", "than", "then",
+            "they", "them", "their", "there", "what", "when", "where",
+            "which", "would", "could", "should", "about", "using",
+            "used", "also", "more", "less", "such", "only", "very",
+            "page", "section"
+        }
+
+        return [
+            token
+            for token in text.split()
+            if len(token) >= 4 and token not in stopwords
+        ]
+    def _infer_page_number(
+        self,
+        chunk_text: str,
+        page_texts: list[dict],
+    ) -> int | None:
+        """
+        Infer page number for a chunk.
+
+        Priority:
+        1. Match heading/section title exactly or nearly exactly.
+        2. Match first meaningful sentence.
+        3. Fall back to token overlap only if strong enough.
+        """
+        if not chunk_text or not page_texts:
+            return None
+
+        normalized_chunk = self._normalize_for_page_match(chunk_text)
+        chunk_tokens = set(self._tokenize_for_page_match(chunk_text))
+
+        if not chunk_tokens:
+            return None
+
+        lines = [
+            line.strip().strip("#").strip()
+            for line in chunk_text.splitlines()
+            if line.strip()
+        ]
+
+        heading_candidates = []
+        first_sentence_candidates = []
+
+        for line in lines[:5]:
+            normalized_line = self._normalize_for_page_match(line)
+
+            if not normalized_line:
+                continue
+
+            # Headings are the strongest signal.
+            if len(normalized_line) >= 8 and len(normalized_line) <= 120:
+                heading_candidates.append(normalized_line)
+
+            if len(normalized_line) >= 30:
+                first_sentence_candidates.append(normalized_line)
+
+        # 1. Exact / near-exact heading match.
+        for phrase in heading_candidates:
+            for page in page_texts:
+                page_text = page.get("normalized_text", "")
+
+                if phrase in page_text:
+                    return page["page_number"]
+
+        # 2. First sentence / phrase match.
+        for phrase in first_sentence_candidates:
+            phrase_probe = phrase[:160]
+
+            for page in page_texts:
+                page_text = page.get("normalized_text", "")
+
+                if phrase_probe in page_text:
+                    return page["page_number"]
+
+        # 3. Token-overlap fallback with stronger threshold.
+        best_page_number: int | None = None
+        best_score = 0.0
+
+        for page in page_texts:
+            page_tokens = page.get("tokens", set())
+
+            if not page_tokens:
+                continue
+
+            overlap = chunk_tokens.intersection(page_tokens)
+            score = len(overlap) / max(len(chunk_tokens), 1)
+
+            # Penalize page 1 fallback unless the score is very strong.
+            if page["page_number"] == 1 and score < 0.45:
+                score *= 0.35
+
+            if score > best_score:
+                best_score = score
+                best_page_number = page["page_number"]
+
+        if best_score < 0.30:
+            return None
+
+        return best_page_number
+
+    def _normalize_for_page_match(self, text: str) -> str:
+        text = text.lower()
+        text = re.sub(r"[^a-z0-9äöüß]+", " ", text)
+        text = re.sub(r"\s+", " ", text)
+        return text.strip()
+
+    def _tokenize_for_page_match(self, text: str) -> list[str]:
+        text = self._normalize_for_page_match(text)
+
+        stopwords = {
+            "this", "that", "with", "from", "into", "than", "then",
+            "they", "them", "their", "there", "what", "when", "where",
+            "which", "would", "could", "should", "about", "using",
+            "used", "also", "more", "less", "such", "only", "very",
+            "page", "section"
+        }
+
+        return [
+            token
+            for token in text.split()
+            if len(token) >= 4 and token not in stopwords
+        ]
+
 
     def _write_chunks_jsonl(
         self,

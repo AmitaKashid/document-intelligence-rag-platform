@@ -1,0 +1,72 @@
+[
+  {
+    "id": "dynamic_q1",
+    "question": "What does the document explain about most combination subjective tutor?",
+    "expected_answer": "technical pronunciation, - tutoring suitability. Final Recommendation For your thesis, the most appropriate combination is: ## Primary - multi-item subjective ratings, - WER-based intelligibility, - category-based benchmark with difficult tutor-relevant prompts, - pairwise preference among top systems.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": null,
+        "section": ""
+      }
+    ],
+    "source_chunk_id": "831c2a7b-4659-4f8a-add5-56eb5f70e09e",
+    "source_preview": "technical pronunciation, - tutoring suitability. ## 14. Final Recommendation For your thesis, the most appropriate combination is: ## Primary - multi-item subjective ratings, - WER-based intelligibility, - category-based benchmark with difficult tutor-relevant prompts, - pairwise preference among top systems. ## Secondary - contextual tutor interaction evaluation. ## Optional - model-as-a-judge for large-scale benchmarking. This combination is the most suitable because it balances: - rigor, - interpretability, - feasibility, - and relevance to your actual voice tutor application. The central message from the uploaded papers is clear: TTS should be evaluated as a multidimensional system, not "
+  },
+  {
+    "id": "dynamic_q2",
+    "question": "What does the document explain in the section 'What it measures' about measures spontaneous behavior prosodic?",
+    "expected_answer": "## What it measures Some papers move beyond naturalness and measure whether the model can generate: - varied prosody, - emotionally appropriate speech, - spontaneous or conversational behavior, - style-appropriate delivery. The LREC 2024 Bark evaluation studies five dimensions: - speaking style, - intelligibility, - speaker consistency, - prosodic variation, - spontaneous behavior.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": null,
+        "section": "What it measures"
+      }
+    ],
+    "source_chunk_id": "c6f49dca-a21f-4e49-bca8-b26e30a645b7",
+    "source_preview": "## What it measures Some papers move beyond naturalness and measure whether the model can generate: - varied prosody, - emotionally appropriate speech, - spontaneous or conversational behavior, - style-appropriate delivery. The LREC 2024 Bark evaluation studies five dimensions: - speaking style, - intelligibility, - speaker consistency, - prosodic variation, - spontaneous behavior. For prosodic variation, it measures:"
+  },
+  {
+    "id": "dynamic_q3",
+    "question": "What does the document explain in the section 'Step 1. Define evaluation dimensions' about dimensions naturalness step define?",
+    "expected_answer": "Define evaluation dimensions Use explicit dimensions, not just 'naturalness': - intelligibility - pronunciation - naturalness - prosody appropriateness - expressiveness - listening effort - overall preference",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": null,
+        "section": "Step 1. Define evaluation dimensions"
+      }
+    ],
+    "source_chunk_id": "7b293e1b-421e-4bf5-8bf7-b6dd30097929",
+    "source_preview": "## Step 1. Define evaluation dimensions Use explicit dimensions, not just 'naturalness': - intelligibility - pronunciation - naturalness - prosody appropriateness - expressiveness - listening effort - overall preference"
+  },
+  {
+    "id": "dynamic_q4",
+    "question": "What does the document explain in the section 'Step 8. Interpret by dimension' about report step interpret dimension?",
+    "expected_answer": "Interpret by dimension Do not report only one winner. Report which model is best for: - intelligibility, - prosody, - expressiveness, - technical pronunciation, - tutoring suitability.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": null,
+        "section": "Step 8. Interpret by dimension"
+      }
+    ],
+    "source_chunk_id": "e55589b8-cecb-4acd-afd0-278a408bbe63",
+    "source_preview": "## Step 8. Interpret by dimension Do not report only one winner. Report which model is best for: - intelligibility, - prosody, - expressiveness, - technical pronunciation, - tutoring suitability."
+  },
+  {
+    "id": "dynamic_q5",
+    "question": "What does the document explain in the section 'How it is done' about audio accuracy done generate?",
+    "expected_answer": "Run a strong ASR system on the audio. Compare the ASR transcript with the intended text.",
+    "expected_sources": [
+      {
+        "document": "TTS evaluation methods.pdf",
+        "page": null,
+        "section": "How it is done"
+      }
+    ],
+    "source_chunk_id": "ea4ca51b-abbc-4a4b-8036-cf58f10cfab5",
+    "source_preview": "## How it is done 1. Generate audio from TTS. 2. Run a strong ASR system on the audio. 3. Compare the ASR transcript with the intended text. 4. Compute WER. The LREC 2024 Bark evaluation explicitly uses WER as a proxy for intelligibility, citing prior work that ASR accuracy correlates with human transcription accuracy. The EmergentTTS-Eval paper also identifies WER as one of the standard automatic TTS metrics."
+  }
+]

@@ -1,0 +1,9 @@
+strategy,top_k,provider,num_questions,avg_overall_score,avg_retrieval_hit,avg_source_recall,avg_mrr,avg_answer_correctness,avg_groundedness,avg_citation_accuracy,avg_latency_ms
+section_aware,3,compatible,5,0.7265,0.8,0.8,0.5333,0.4501,0.85,0.8,706.47
+section_aware,5,compatible,5,0.7145,0.8,0.8,0.5333,0.386,0.9,0.8,1351.356
+parent_child,5,compatible,5,0.708,0.8,0.8,0.64,0.5024,0.95,0.8,8534.32
+parent_child,3,compatible,5,0.6544,0.6,0.6,0.6,0.5295,1.0,0.6,6139.296
+recursive,3,compatible,5,0.6192,0.8,0.8,0.8,0.3958,0.6215,0.8,9478.928
+table_preserving,3,compatible,5,0.6007,0.8,0.8,0.8,0.3759,0.5733,0.8,9471.08
+table_preserving,5,compatible,5,0.5998,0.8,0.8,0.8,0.3654,0.6422,0.8,14004.92
+recursive,5,compatible,5,0.5833,0.8,0.8,0.8,0.36,0.5667,0.8,13795.266

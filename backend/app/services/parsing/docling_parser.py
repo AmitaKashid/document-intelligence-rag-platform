@@ -42,6 +42,7 @@ class DoclingParser:
             "parser_name": "docling",
             "parsed_markdown_filename": parsed_filename,
             "parsed_markdown_path": str(parsed_path),
+            "source_pdf_path": str(pdf_path),
             "markdown_char_count": len(markdown),
             "markdown_preview": markdown[:1000],
         }

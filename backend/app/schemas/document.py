@@ -51,6 +51,10 @@ class UploadedDocument(BaseModel):
     chunking_results: list[ChunkingResult] = []
     embedding_results: list[EmbeddingResult] = []
     indexing_results: list[IndexingResult] = []
+    document_profile: dict | None = None
+    profile_path: str | None = None
+    recommended_strategy: str | None = None
+    recommended_top_k: int | None = None
 
 
 class UploadDocumentsResponse(BaseModel):
@@ -132,9 +136,12 @@ class SearchResponse(BaseModel):
 class ChatRequest(BaseModel):
     question: str
     document_id: str | None = None
-    strategy: str = "section_aware"
     limit: int = 5
     provider: str = "extractive"
+    strategy: str | None = "auto"
+
+    rerank: bool | None = None
+    rerank_candidate_limit: int | None = None
 
 
 class ChatSource(BaseModel):
@@ -149,6 +156,10 @@ class ChatSource(BaseModel):
     chunk_index: int
     text: str
 
+    similarity_score: float | None = None
+    rerank_score: float | None = None
+    original_rank: int | None = None
+
 
 class ChatResponse(BaseModel):
     question: str
@@ -157,6 +168,10 @@ class ChatResponse(BaseModel):
     provider: str
     document_id: str | None = None
     sources: list[ChatSource]
+    used_strategy: str | None = None
+    used_top_k: int | None = None
+    used_reranking: bool | None = None
+    rerank_candidate_limit: int | None = None
 
 
 class EvaluationTestCase(BaseModel):

@@ -1,0 +1,41 @@
+strategy,top_k,provider,question_id,question,answer_correctness,groundedness_score,supported_claim_ratio,citation_accuracy,retrieval_hit,source_recall,mrr,latency_ms,overall_score
+section_aware,3,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.2095,1.0,1.0,1.0,1.0,1.0,0.3333,828.27,0.7624
+section_aware,3,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.7826,1.0,1.0,1.0,1.0,1.0,1.0,605.82,0.9456
+section_aware,3,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.3363,1.0,1.0,1.0,1.0,1.0,1.0,640.36,0.8341
+section_aware,3,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.597,1.0,1.0,0.0,0.0,0.0,0.0,717.01,0.4493
+section_aware,3,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.325,0.25,0.25,1.0,1.0,1.0,0.3333,740.89,0.6412
+section_aware,5,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.169,1.0,1.0,1.0,1.0,1.0,0.3333,824.63,0.7522
+section_aware,5,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.6522,1.0,1.0,1.0,1.0,1.0,1.0,743.85,0.913
+section_aware,5,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.3846,1.0,1.0,1.0,1.0,1.0,1.0,743.46,0.8461
+section_aware,5,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.4545,1.0,1.0,0.0,0.0,0.0,0.0,682.9,0.4136
+section_aware,5,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.2697,0.5,0.5,1.0,1.0,1.0,0.3333,3761.94,0.6474
+recursive,3,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.2524,0.6667,0.6667,1.0,1.0,1.0,1.0,9950.99,0.6864
+recursive,3,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.75,1.0,1.0,1.0,1.0,1.0,1.0,7730.18,0.8775
+recursive,3,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.3529,0.6,0.6,1.0,1.0,1.0,1.0,9014.89,0.6982
+recursive,3,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.4,0.75,0.75,1.0,1.0,1.0,1.0,11833.31,0.72
+recursive,3,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.2236,0.0909,0.0909,0.0,0.0,0.0,0.0,8865.27,0.1141
+recursive,5,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.1646,0.3333,0.3333,1.0,1.0,1.0,1.0,13037.49,0.5778
+recursive,5,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.7407,1.0,1.0,1.0,1.0,1.0,1.0,16890.52,0.8552
+recursive,5,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.3684,0.75,0.75,1.0,1.0,1.0,1.0,11132.0,0.7121
+recursive,5,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.3014,0.6667,0.6667,1.0,1.0,1.0,1.0,13001.88,0.6787
+recursive,5,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.225,0.0833,0.0833,0.0,0.0,0.0,0.0,14914.44,0.0929
+parent_child,3,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.6186,1.0,1.0,1.0,1.0,1.0,1.0,7709.65,0.8447
+parent_child,3,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.7714,1.0,1.0,1.0,1.0,1.0,1.0,8761.35,0.8829
+parent_child,3,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.4144,1.0,1.0,1.0,1.0,1.0,1.0,4716.54,0.8236
+parent_child,3,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.5672,1.0,1.0,0.0,0.0,0.0,0.0,2690.02,0.4118
+parent_child,3,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.2759,1.0,1.0,0.0,0.0,0.0,0.0,6818.92,0.309
+parent_child,5,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.6383,1.0,1.0,1.0,1.0,1.0,1.0,11724.04,0.8296
+parent_child,5,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.6087,1.0,1.0,1.0,1.0,1.0,1.0,9750.6,0.8422
+parent_child,5,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.4071,1.0,1.0,1.0,1.0,1.0,1.0,7773.49,0.7918
+parent_child,5,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.5634,1.0,1.0,0.0,0.0,0.0,0.0,3667.14,0.4108
+parent_child,5,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.2947,0.75,0.75,1.0,1.0,1.0,0.2,9756.33,0.6657
+table_preserving,3,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.1754,0.5,0.5,1.0,1.0,1.0,1.0,12009.41,0.6139
+table_preserving,3,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.6944,0.5,0.5,1.0,1.0,1.0,1.0,8935.0,0.7636
+table_preserving,3,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.3667,1.0,1.0,1.0,1.0,1.0,1.0,6781.79,0.7817
+table_preserving,3,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.2857,0.6667,0.6667,1.0,1.0,1.0,1.0,11866.53,0.6748
+table_preserving,3,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.3571,0.2,0.2,0.0,0.0,0.0,0.0,7762.67,0.1693
+table_preserving,5,compatible,tts_q1,Why is no single metric sufficient for evaluating TTS models?,0.1798,0.6,0.6,1.0,1.0,1.0,1.0,15092.12,0.635
+table_preserving,5,compatible,tts_q2,What does Mean Opinion Score measure in TTS evaluation?,0.7714,1.0,1.0,1.0,1.0,1.0,1.0,14861.8,0.8629
+table_preserving,5,compatible,tts_q3,Why are modified MOS or multi-item quality scales useful?,0.386,0.75,0.75,1.0,1.0,1.0,1.0,10864.37,0.7165
+table_preserving,5,compatible,tts_q4,How does ASR-based WER evaluate intelligibility?,0.215,0.75,0.75,1.0,1.0,1.0,1.0,16112.13,0.6738
+table_preserving,5,compatible,tts_q5,Which TTS evaluation methods are recommended as core methods for the thesis?,0.2748,0.1111,0.1111,0.0,0.0,0.0,0.0,13094.18,0.1109

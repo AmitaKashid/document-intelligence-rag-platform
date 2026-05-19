@@ -46,7 +46,10 @@ class Settings(BaseSettings):
     OPENAI_COMPATIBLE_API_KEY: str | None = None
     OPENAI_COMPATIBLE_MODEL: str = "llama-3.1-8b-instant"
 
-
+    ENABLE_RERANKING: bool = True
+    RERANKER_MODEL: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    RERANKER_CANDIDATE_LIMIT: int = 12
+    RERANKER_FINAL_TOP_K: int = 3
 settings = Settings()
 
 settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
